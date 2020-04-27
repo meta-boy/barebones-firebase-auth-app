@@ -3,10 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:permissions_plugin/permissions_plugin.dart';
-import 'package:uslabs_assignment/screens/contacts/contacts.dart';
-import 'package:uslabs_assignment/screens/home/home.dart';
-import 'package:uslabs_assignment/screens/location/location.dart';
-import 'package:uslabs_assignment/screens/logs/logs.dart';
+
+import '../contacts/contacts.dart';
+import '../home/home.dart';
+import '../image_uploader/image_uploader.dart';
+import '../location/location.dart';
+import '../logs/logs.dart';
 
 class MainScreen extends StatefulWidget {
   final DocumentSnapshot documentSnapshot;
@@ -65,6 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
   TextEditingController _controller4;
   TextEditingController _controller5;
   String password;
+  String uid;
   Map<String, dynamic> data;
   @override
   void initState() {
@@ -82,6 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ? data['phone'].toString()
         : data['phone'] == 0 ? null : data['phone'].toString();
     password = data['password'];
+    uid = data['uid'];
 
     super.initState();
   }
@@ -267,6 +271,18 @@ class _ProfilePageState extends State<ProfilePage> {
                   });
                 },
                 child: Text("Get Location"),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              RaisedButton(
+                onPressed: () async {
+                  Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => ImageUploader(uid: uid,)));
+                },
+                child: Text("Upload Image"),
               ),
               SizedBox(
                 height: 20,
